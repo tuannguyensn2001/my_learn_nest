@@ -1,21 +1,18 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import config from "../ormconfig";
-import { ConfigModule } from "@nestjs/config";
-import { CategoriesModule } from "./module/backend/categories/categories.module";
-import database from "./config/database";
-
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfigAsync } from '../ormconfig';
+import { ConfigModule } from '@nestjs/config';
+import { CategoriesModule } from './module/backend/categories/categories.module';
+import { configuaration } from './config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [database]
+      load: [configuaration]
     }),
-    TypeOrmModule.forRoot(config),
+    TypeOrmModule.forRootAsync(typeOrmConfigAsync),
     CategoriesModule
-
   ]
 })
-export class AppModule {
-}
+export class AppModule {}
